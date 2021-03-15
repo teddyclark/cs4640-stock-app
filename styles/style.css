@@ -18,7 +18,7 @@ h1 {
 .article {
     background-color: #F5F5F5;
     border-radius: 10px;
-    box-shadow: 0px 0px 50px -20px;
+    box-shadow: 0px 0px 50px -25px;
     margin-top: 20px;
     margin-bottom: 20px;
     padding: 10px;
@@ -27,7 +27,7 @@ h1 {
 
 .navbar {
     background-color: #5CDB59;
-    box-shadow: 0px 0px 50px;
+    box-shadow: 0px 0px 50px -25px;
     margin-bottom: 25px;
 }
 
@@ -55,7 +55,22 @@ h1 {
 }
 
 .nav-search {
-    border-radius: 5px;;
+    border-radius: 5px;
     margin-top: 27px;
     padding: 5px;
+}
+
+.stock-img {
+    border-radius: 25px;
+    width: 50%;
+}
+
+.my-stocks ul {
+    list-style-type: none;
+}
+
+.my-stocks li {
+    list-style-type: none;
+    margin: 15px 0;
+    text-align: left;
 }
