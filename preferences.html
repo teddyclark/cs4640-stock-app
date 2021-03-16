@@ -144,6 +144,9 @@
       stockHead = document.createElement('h1');
       stockHead.innerHTML = 'My Stocks';
 
+      stockDesc = document.createElement('p');
+      stockDesc.innerHTML = 'To add a stock, search for the ticker in the top right and hit submit!'
+
       listContainer.className = 'container';
       listRow.className = 'row';
       listCol.className = 'col';
@@ -153,6 +156,7 @@
       listContainer.appendChild(listRow);
       listRow.appendChild(listCol);
       listCol.appendChild(stockHead);
+      listCol.appendChild(stockDesc);
       listCol.appendChild(listElement);
   }
 
