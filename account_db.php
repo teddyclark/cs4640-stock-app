@@ -15,4 +15,24 @@
     
   }
 
+  function get_password($email) {
+    global $db;
+
+    $query = "SELECT password FROM accounts WHERE email=:email LIMIT 1";
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':email', $email);
+    $statement->execute();
+    
+    $results = $statement->fetchAll();
+    $statement->closecursor();
+
+    
+    foreach($results as $result) {
+        return($result['password'] . "<br/>");
+    }
+
+    
+}
+
 ?>
