@@ -18,8 +18,8 @@
 /******************************/
 // connecting to DB on XAMPP (local)
 
-$username = 'peng';//'root';
-$password = 'password';//'cs4640';
+$username = 'root';//'root';
+$password = '';//'cs4640';
 $host = 'localhost';//'34.86.26.34';
 $dbname = 'stock_app_db';
 

@@ -93,7 +93,7 @@
                 <a class="nav-link" href="personal.html">My Stocks</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="preferences.html">Preferences</a>
+                <a class="nav-link" href="preferences.php">Preferences</a>
             </li>
             <li class="nav-item">
                 <input class="nav-search" type="text" placeholder="Search Stocks">

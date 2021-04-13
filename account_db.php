@@ -15,7 +15,7 @@
 
   }
 
-  function get_password($email) {
+function get_password($email) {
     global $db;
 
     $query = "SELECT password FROM accounts WHERE email=:email LIMIT 1";
@@ -32,24 +32,41 @@
         return($result['password'] . "<br/>");
     }
 
+}
+
+function get_name($email) {
+    global $db;
+
+    $query = "SELECT fname, lname FROM accounts WHERE email=:email LIMIT 1";
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':email', $email);
+    $statement->execute();
+
+    $results = $statement->fetchAll();
+    $statement->closecursor();
+
+    foreach($results as $result) {
+        return($result['fname'] . " " . $result['lname'] . "<br/>");
     }
+}
 
-    function get_userId($email) {
-      global $db;
+function get_userId($email) {
+    global $db;
 
-      $query = "SELECT user_id FROM accounts WHERE email=:email LIMIT 1";
+    $query = "SELECT user_id FROM accounts WHERE email=:email LIMIT 1";
 
-      $statement = $db->prepare($query);
-      $statement->bindValue(':email', $email);
-      $statement->execute();
+    $statement = $db->prepare($query);
+    $statement->bindValue(':email', $email);
+    $statement->execute();
 
-      $results = $statement->fetchAll();
-      $statement->closecursor();
+    $results = $statement->fetchAll();
+    $statement->closecursor();
 
-      
-      foreach($results as $result) {
-          return($result['user_id'] . "<br/>");
-      }
+    
+    foreach($results as $result) {
+        return($result['user_id'] . "<br/>");
     }
+}
 
 ?>
