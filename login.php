@@ -1,9 +1,13 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">   
+        <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">  <!-- required to handle IE -->
-        <meta name="viewport" content="width=device-width, initial-scale=1">  
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>STOCKS | Login</title>
 
@@ -68,15 +72,12 @@
 
 
         <?php
-            session_start();
-        ?>
-        <?php
             require('connectdb.php');
             require('account_db.php');
 
             function authenticate() {
                 global $mainpage;
-                
+
                 $hash = NULL;
                 $email = NULL;
 
@@ -85,17 +86,19 @@
                 }
 
                 $hash = get_password($email);
-            
+
                 if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $pwd = trim($_POST['pwd']);
-                    $hash = htmlspecialchars($pwd); 
+                    $hash = htmlspecialchars($pwd);
                     $hash = crypt($hash, "cs4640");
 
                     $db_pwd = get_password($email);
                     $db_pwd = substr(htmlspecialchars($db_pwd), 0, -11);
-                    
+
 
                     if($hash == $db_pwd) {
+                        $_SESSION['email'] = $email;
+                        $_SESSION['user'] = get_userId($email);
                         header("Location: ".$mainpage);
                     }
                     else {
@@ -124,7 +127,7 @@
 
                     $_SESSION['user'] = $user;
 
-                    $hash = htmlspecialchars($password); 
+                    $hash = htmlspecialchars($password);
                     $hash = crypt($hash, "cs4640");
 
                     $_SESSION['pwd'] = $hash;

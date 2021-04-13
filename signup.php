@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require('connectdb.php');
     require('account_db.php');
 
@@ -12,8 +13,8 @@
         $lname = $_POST['lname'];
         $email = $_POST['email'];
         $password = $_POST['password'];
-        
-        $hash = htmlspecialchars($password); 
+
+        $hash = htmlspecialchars($password);
         $hash = crypt($hash, "cs4640");
 
         if(isset($_POST['submit'])){
@@ -25,10 +26,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">  
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Clark, Zhang">
-    <meta name="description" content="Stock App Signup Page">     
+    <meta name="description" content="Stock App Signup Page">
 
     <title>STOCKS | Sign Up</title>
 
@@ -75,24 +76,24 @@
         </div>
     </nav>
 
-    <div class='container'>    
+    <div class='container'>
         <div class='column' id='form'>
         <h2>Create Account</h2>
         <p>Already have an account? <a href="login.php">Login</a></p>
             <form method="post" action="<?php $_SERVER['PHP_SELF'] ?>" method='post'>
                 <div class="form-row">
                     <div class="col">
-                        First Name: 
+                        First Name:
                         <input type="text" name="fname" class='form-control' placeholder="first name..." required>
                     </div>
                     <div class="col">
-                        Last Name: 
+                        Last Name:
                         <input type="text" name="lname" class='form-control' placeholder="last name..." required>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col">
-                        Email: 
+                        Email:
                         <input type="email" name="email" class='form-control' placeholder="email address" required>
                     </div>
                 </div>
@@ -102,13 +103,13 @@
                         <input type="password" name="password" class="form-control" placeholder="password..." required/>
                     </div>
                 </div>
-                
+
                 <input id='sbtn' name="submit" type="submit" value="Sign Up" class="btn btn-secondary" />
             </form>
         </div>
     </div>
 
-    <script> 
+    <script>
         function validateSignUp() {
             p = password.value.length <= 0;
             f = fname.value.length <= 0;
@@ -125,7 +126,7 @@
                 return false;
             }
             // ensure email match password (fix later)
-            else if(email.value != tempemail || password.value != temppwd){ 
+            else if(email.value != tempemail || password.value != temppwd){
                 alert("The username or password you've entered is incorrect.");
             }
             // redirect to main page if successful
@@ -133,6 +134,6 @@
                 window.location.href = "mainpage.php";
                 return false;
             }
-        }   
+        }
         </script>
 </body>

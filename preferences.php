@@ -1,3 +1,26 @@
+<?php
+    session_start();
+    require('connectdb.php');
+    require('ticker_db.php');
+    require('account_db.php');
+
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $ticker = $_POST['ticker'];
+
+        if(isset($_POST['submit'])){
+          echo "here";
+          if(isset($_POST['add'])) {
+            echo "here2";
+            addTicker($ticker);
+          }
+          else {
+            echo "here3";
+            removeTicker($ticker);
+          }
+        }
+    }
+?>
+
 <html>
     <head>
     <meta charset="UTF-8">
@@ -41,7 +64,9 @@
   </head>
 
   <body>
-    <?php session_start(); ?>
+    <?php
+      getTickers($_SESSION['email']);
+    ?>
 
     <!-- CDN for JS bootstrap -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -88,6 +113,22 @@
     </nav>
 
     <div class="container">
+        <div class="column" id="form">
+            <h2>Stock Search</h2>
+            <div class="form-row">
+                <div class="col">
+                    <form action="preferences.php" method="post">
+                        Ticker: <input type="text" name="ticker" /> <br/>
+                        <input type="checkbox" id="ch1" name="add" value="1">
+                        <label for="ch1"> Check here to add to list, leave unchecked to remove from list</label><br>
+                        <input type="submit" value="Submit" class="btn btn-secondary" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
         <div class="row">
             <div class="col-md">
                 <h1>My Profile</h1>
@@ -100,7 +141,12 @@
     </div>
 
     <script>
-    let listData = [];
+    let listData =
+    <?php
+      foreach ($_COOKIE as $key => $value) {
+        echo json_encode($value);
+      }
+    ?>;
 
     //arrow function
     let check = val => /^[a-zA-Z]+$/.test(val);
