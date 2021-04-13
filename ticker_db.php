@@ -6,7 +6,7 @@
     $query = "INSERT INTO tickers VALUES(:userid, :ticker)";
     $statement = $db->prepare($query);
 
-    $statement->bindValue(':userid', $_SESSION['user']);
+    $statement->bindValue(':userid', get_userId($_SESSION['email']));
     $statement->bindValue(':ticker', $ticker);
 
     try {
