@@ -1,3 +1,29 @@
+<?php
+    session_start();
+    var_dump($_SESSION);
+    require('connectdb.php');
+    require('ticker_db.php');
+    require('account_db.php');
+
+    //var_dump($_COOKIE);
+    
+
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $ticker = $_POST['ticker'];
+
+        if(isset($_POST['submit'])){
+          if(isset($_POST['add'])) {
+            addTicker($ticker);
+            header("Refresh:0");
+          }
+          else {
+            removeTicker($ticker);
+            header("Refresh:0");
+          }
+        }
+    }
+?>
+
 <html>
     <head>
     <meta charset="UTF-8">
@@ -41,7 +67,9 @@
   </head>
 
   <body>
-    <?php session_start(); ?>
+    <?php
+      getTickers($_SESSION['email']);
+    ?>
 
     <!-- CDN for JS bootstrap -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -71,13 +99,13 @@
         <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="index.html">Global News</a>
+                <a class="nav-link" href="mainpage.php">Global News</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="personal.html">My Stocks</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="preferences.html">Preferences</a>
+                <a class="nav-link" href="preferences.php">Preferences</a>
             </li>
             <li class="nav-item">
                 <input class="nav-search" type="text" placeholder="Search Stocks">
@@ -88,20 +116,48 @@
     </nav>
 
     <div class="container">
+        <div class="column" id="form">
+            <h2>Stock Search</h2>
+            <div class="form-row">
+                <div class="col">
+                    <form action="preferences.php" method="post">
+                        Ticker: <input type="text" name="ticker" /> <br/>
+                        <input type="checkbox" id="ch1" name="add" value="1">
+                        <label for="ch1"> Check here to add to list, leave unchecked to remove from list</label><br>
+                        <input name="submit" type="submit" value="Submit" class="btn btn-secondary" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
         <div class="row">
             <div class="col-md">
                 <h1>My Profile</h1>
                 <ul class="my-stocks">
-                    <li>Name: Teddy Clark</li>
-                    <li>Email: ejc7re@virginia.edu</li>
+                    <li>Name: <?php echo get_name($_SESSION['email']) ?></li>
+                    <li>Email: <?php echo $_SESSION['email'] ?></li>
                 </ul>
             </div>
         </div>
     </div>
 
+    <div class="container">
+        <h1>My Stocks</h1>
+        <?php
+        $cookie = json_decode($_COOKIE[get_userId($_SESSION['email'])]);
+        foreach($cookie as $key=>$value) {            
+            foreach($value as $name=>$ticker) {
+                if($name == "ticker") {
+                    echo $ticker . "<br/>";
+                }
+            }
+        }
+        ?>;
+    </div>
+    
     <script>
-    let listData = [];
-
     //arrow function
     let check = val => /^[a-zA-Z]+$/.test(val);
 
@@ -143,8 +199,8 @@
       listCol = document.createElement('div'),
       listElement = document.createElement('ul');
 
-      stockHead = document.createElement('h1');
-      stockHead.innerHTML = 'My Stocks';
+      //stockHead = document.createElement('h1');
+      //stockHead.innerHTML = 'My Stocks';
 
       stockDesc = document.createElement('p');
       stockDesc.innerHTML = 'To add a stock, search for the ticker in the top right and hit submit!'
