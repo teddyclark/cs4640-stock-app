@@ -1,0 +1,113 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+    background-color: #EDF5E1;
+    color: #05386B;
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 400;
+}
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+}
+
+.container {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.container #form {
+    background-color:rgba(169, 169, 169, .25);
+    border-radius: 25px;
+    box-shadow: 0px 0px 50px -25px;
+    padding: 20px;
+}
+.container .column .form-row {
+    padding: 15px;
+}
+
+.article {
+    background-color: #F5F5F5;
+    border-radius: 10px;
+    box-shadow: 0px 0px 50px -25px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    text-align: left;
+}
+
+.article:hover {
+    cursor: pointer;
+
+}
+
+.navbar {
+    background-color: #5CDB59;
+    box-shadow: 0px 0px 50px -25px;
+    margin-bottom: 25px;
+}
+
+.navbar-brand {
+    color: #05386B;
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 800;
+}
+
+.nav-link {
+    color: #05386B;
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 20px;
+}
+
+.nav-link:hover {
+    color: #379683;
+}
+
+.nav-item {
+    color: #05386B;
+}
+
+.nav-search {
+    border-radius: 5px;
+    margin-top: 27px;
+    padding: 5px;
+}
+
+.stock-img {
+    border-radius: 25px;
+    width: 50%;
+}
+
+.my-stocks ul {
+    list-style-type: none;
+}
+
+.my-stocks li {
+    list-style-type: none;
+    margin: 15px 0;
+    text-align: left;
+}
+
+.carousel-caption {
+    background-color: rgba(169, 169, 169, .25);
+}
+.carousel-caption h5 {
+    color: #05386B;
+    font-size: 36px;
+    font-weight: 600;
+}
+
+.carousel-item:before {
+    -webkit-box-shadow: inset 0 0 20rem rgba(0, 0, 0, 1);
+    box-shadow: inset 0 0 10rem rgba(0, 0, 0, .5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: "";
+}
+
