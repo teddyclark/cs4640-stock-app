@@ -30,7 +30,7 @@
         <div class="form-group">
             <select required class="custom-select" [(ngModel)]="tickerModel.tickername" name="ticker_option">
                 <option value="">What stock would you like to view?</option>
-                <option *ngFor="let ticker of tickers">{{ticker}} </option>
+                <option *ngFor="let ticker of tickers">{{ ticker }} </option>
             </select>
         </div>
 
@@ -44,6 +44,9 @@
     </form>
 
 
+    <p>Response from PHP: {{ responsedata | json }}</p>
+    <p>From Form: {{ stockForm.value | json }}</p>
+    <p>From Form: {{ tickerModel | json }}</p>
     <!--
     <div class="container">
         <div class="row">

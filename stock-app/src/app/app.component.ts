@@ -39,9 +39,9 @@ export class AppComponent {
         this.http.get<Ticker>('http://localhost/cs4640-stock-app/ticker_db.php?str='+params);
 
         // fix this too
-        this.http.post<Ticker>('http://localhost/cs4640-stock-app/ticker_db.php', params)
+        this.http.post<Ticker>('http://localhost/cs4640-stock-app/stock-app/src/app/ng-post.php', params)
         .subscribe((response_from_php) => {
-            this.responsedata= response_from_php;
+            this.responsedata = response_from_php;
         }, (error_in_communication) => {
             console.log('Error');
         })
