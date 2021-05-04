@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { Ticker } from './ticker';
-
+import { Tip } from './tip';
 
 @Component({
   selector: 'app-root',
@@ -12,38 +11,40 @@ export class AppComponent {
     constructor(private http: HttpClient) { }
 
     title = 'Angular - backend, HttpClient'
-    author = 'ejc7re and pz4hk'
+    author = 'ejc7re, pz4hk'
 
-    // somehow need to pull these from PHP cookie
-    tickers = ['placeholders', 'GME', 'BTC'];
+    types = ['General', 'Stocks', 'Options', 'Cryptocurrency'];
 
     confirm_msg = '';
     data_submitted = '';
 
-    tickerModel = new Ticker('', '', '');
+    tipModel = new Tip('', '');
 
-    confirmTicker(data: any): void {
+    getFromDB(data:any): void {
+        this.data_submitted = data;
+        let params = JSON.stringify(data);
         console.log(data);
-        this.confirm_msg = data.name + ', you are currently viewing ' + data.tickername + '!';
+        this.http.get<void>('http://localhost/cs4640-stock-app/tip_db_get.php?str='+params);
     }
 
-    responsedata = new Ticker('', '', '');
+    confirmTip(data: any): void {
+        console.log(data);
+        this.confirm_msg = 'Thanks for the ' + data.type + ' tip!';
+    }
 
+    responsedata = new Tip('', '');
     onSubmit(form: any): void {
         console.log('form submitted ', form);
         this.data_submitted = form;
 
         let params = JSON.stringify(form);
+        console.log(params);
         
-        // fix this
-        this.http.get<Ticker>('http://localhost/cs4640-stock-app/ticker_db.php?str='+params);
-
-        // fix this too
-        this.http.post<Ticker>('http://localhost/cs4640-stock-app/stock-app/src/app/ng-post.php', params)
+        this.http.post<Tip>('http://localhost/cs4640-stock-app/tip_db.php', params)
         .subscribe((response_from_php) => {
             this.responsedata = response_from_php;
         }, (error_in_communication) => {
-            console.log('Error');
+            console.log('Error: ', error_in_communication);
         })
 
 

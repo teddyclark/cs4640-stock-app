@@ -90,7 +90,7 @@
                 <a class="nav-link" href="#">Global News</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" onclick="javascript:event.target.port=4200" href="localhost">My Stocks</a>
+                <a class="nav-link" onclick="javascript:event.target.port=4200" href="localhost">Tips</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="preferences.php">Preferences</a>
