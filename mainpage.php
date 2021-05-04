@@ -57,7 +57,7 @@
         $news = array_slice($client->generalNews('general'), 0, 5);
     ?>
     <?php
-        var_dump($_SESSION);
+        //var_dump($_SESSION);
         if(isset($_SESSION['user'])) {
     ?>
     <?php
