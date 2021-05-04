@@ -5,16 +5,37 @@
     require('ticker_db.php');
     require('account_db.php');
 
+    require_once(__DIR__ . '/vendor/autoload.php');
+
     //var_dump($_COOKIE);
-    
+    if (!isset($config)) {
+      $config = Finnhub\Configuration::getDefaultConfiguration()->setApiKey('token', 'c289guqad3i8rjpb0eb0');
+    }
+    if (!isset($client)) {
+      $client = new Finnhub\Api\DefaultApi(
+        new GuzzleHttp\Client(),
+        $config
+      );
+    }
+    if (!isset($symbols)) {
+      $symbols = $client->stockSymbols('US');
+    }
+    if (!isset($tickers)) {
+      $tickers = array();
+      foreach ($symbols as $key => $value) {
+        array_push($tickers, json_decode($value)->symbol);
+      }
+    }
 
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        $ticker = $_POST['ticker'];
+        $ticker = strtoupper($_POST['ticker']);
 
         if(isset($_POST['submit'])){
           if(isset($_POST['add'])) {
-            addTicker($ticker);
-            header("Refresh:0");
+            if (in_array($ticker, $tickers)) {
+              addTicker($ticker);
+              header("Refresh:0");
+            }
           }
           else {
             removeTicker($ticker);
@@ -22,6 +43,7 @@
           }
         }
     }
+
 ?>
 
 <html>
@@ -102,14 +124,10 @@
                 <a class="nav-link" href="mainpage.php">Global News</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" onclick="javascript:event.target.port=4200" href="localhost">My Stocks</a>
+                <a class="nav-link" onclick="javascript:event.target.port=4200" href="localhost">Tips</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="preferences.php">Preferences</a>
-            </li>
-            <li class="nav-item">
-                <input class="nav-search" type="text" placeholder="Search Stocks">
-                <button type="submit" onclick="addStock()">Submit</button>
             </li>
         </ul>
         </div>
@@ -147,16 +165,20 @@
         <h1>My Stocks</h1>
         <?php
         $cookie = json_decode($_COOKIE[get_userId($_SESSION['email'])]);
-        foreach($cookie as $key=>$value) {            
+        foreach($cookie as $key=>$value) {
             foreach($value as $name=>$ticker) {
                 if($name == "ticker") {
-                    echo $ticker . "<br/>";
+                    //echo $ticker . "<br/>";
+                    $url = "https://robinhood.com/stocks/" . $ticker;
+                    echo <<<HTML
+                      <a href= $url>$ticker</a><br>
+                      HTML;
                 }
             }
         }
         ?>;
     </div>
-    
+
     <script>
     //arrow function
     let check = val => /^[a-zA-Z]+$/.test(val);

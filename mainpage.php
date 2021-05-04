@@ -42,14 +42,24 @@
 
   <body>
 
-    <?php 
+    <?php
+        require_once(__DIR__ . '/vendor/autoload.php');
         session_start();
+        if (!isset($config)) {
+          $config = Finnhub\Configuration::getDefaultConfiguration()->setApiKey('token', 'c289guqad3i8rjpb0eb0');
+        }
+        if (!isset($client)) {
+          $client = new Finnhub\Api\DefaultApi(
+            new GuzzleHttp\Client(),
+            $config
+          );
+        }
+        $news = array_slice($client->generalNews('general'), 0, 5);
     ?>
     <?php
         var_dump($_SESSION);
         if(isset($_SESSION['user'])) {
     ?>
-        <p>Welcome <?php echo $_SESSION['user'];?>!</p>
     <?php
         }
         /*
@@ -58,7 +68,7 @@
         }*/
     ?>
 
-  
+
     <!-- CDN for JS bootstrap -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
@@ -90,13 +100,10 @@
                 <a class="nav-link" href="#">Global News</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" onclick="javascript:event.target.port=4200" href="localhost">My Stocks</a>
+                <a class="nav-link" onclick="javascript:event.target.port=4200" href="localhost">Tips</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="preferences.php">Preferences</a>
-            </li>
-            <li class="nav-item">
-                <input class="nav-search" type="text" placeholder="Search Stocks">
             </li>
         </ul>
         </div>
@@ -105,50 +112,49 @@
     <div class="container">
         <div class="row">
             <div class="col-md">
-                <h1>Dow Jones Industrial Average</h1>
-                <div class="stock chart">
-                    <img id="dow" class="stock-img" width="700" src="images/dow jones.png">
+                <h1>GLOBAL NEWS</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <div class="article">
+                    <h2><?php echo json_decode($news[0])->headline?></h2>
+                    <p><?php echo json_decode($news[0])->summary?></p>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md">
                 <div class="article">
-                    <h2>Article One</h2>
-                    <p>Here is a short summary of the article.</p>
+                    <h2><?php echo json_decode($news[1])->headline?></h2>
+                    <p><?php echo json_decode($news[1])->summary?></p>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md">
                 <div class="article">
-                    <h2>Article Two</h2>
-                    <p>Here is a short summary of the article.</p>
+                    <h2><?php echo json_decode($news[2])->headline?></h2>
+                    <p><?php echo json_decode($news[2])->summary?></p>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md">
                 <div class="article">
-                    <h2>Article Three</h2>
-                    <p>Here is a short summary of the article.</p>
+                    <h2><?php echo json_decode($news[3])->headline?></h2>
+                    <p><?php echo json_decode($news[3])->summary?></p>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md">
                 <div class="article">
-                    <h2>Article Four</h2>
-                    <p>Here is a short summary of the article.</p>
+                    <h2><?php echo json_decode($news[4])->headline?></h2>
+                    <p><?php echo json_decode($news[4])->summary?></p>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-    var dow = document.getElementById('dow');
-    dow.addEventListener('click', function() {
-      window.open("./dow.html");
-    })
-    </script>
   </body>
 </html>
